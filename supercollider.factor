@@ -80,11 +80,11 @@ TUPLE: node
 
 ! synth
 
-: launch-synth ( synth-spec -- )
+: launch-synth ( synth-spec -- ) ! Play a synth on the server without allocating it an ID. This should generally only be used for synths that will free themselves when finished, i.e. "one-shots". For synths that sustain, see `synth` instead, which will return a synth object that contains its ID, allowing you to control it.
     [ first 1array { -1 0 1 } ]
     [ rest ] bi 3append
     "/s_new" swap
-    (msg-sc) ;
+    msg-sc 2drop ;
 
 GENERIC: synth ( synth-spec -- node )
 
