@@ -120,7 +120,7 @@ sc-server [ <sc-server> ] initialize
 : get-reply ( sc-server -- msg )
     [ responses>> ] [ timeout>> ] bi mailbox-get-timeout ;
 
-: msg-sc-server ( server addr params -- addr params )
+: msg-sc-server ( sc-server addr params -- addr params )
     pick [ (msg-sc-server) ] dip get-reply osc> ;
 
 : msg-sc ( addr params -- addr params )
