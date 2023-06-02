@@ -105,8 +105,55 @@ TUPLE: group < node
     swap >>action
     swap >>id ;
 
+GENERIC: group-id ( group-or-id -- id )
+
+M: group group-id
+    id>> ;
+
+M: integer group-id ;
+
+SC: (sc-server-new-group) ( sc-server id add-action target-id msg -- )
+    [ 3array ] dip swap msg-sc-server 2drop ;
+
+! : sc-server-new-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-group`, `<group>`.
+!     3array "/g_new" swap msg-sc-server 2drop ;
+
+SC: sc-server-new-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-group`, `<group>`.
+    "/g_new" (sc-server-new-group) ;
+
+SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-group`, `<group>`.
+    "/p_new" (sc-server-new-group) ;
+
+! : sc-new-group ( id add-action target-id -- )
+!     sc-server get 4 -nrot sc-server-new-group ;
+
+! SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ;
+
+: group-dump-tree ( group print-control-values? -- )
+    [ group-id ]
+    [ boolean>number ] bi*
+    2array "/g_dumpTree" swap (msg-sc) ;
+
 : group-query-tree ( group -- seq )
-    0 2array "/g_queryTree" swap msg-sc nip ;
+    group-id 0 2array "/g_queryTree" swap msg-sc nip ;
+
+: server-query-tree ( sc-server -- seq )
+    [ 0 group-query-tree ] with-sc-server ;
+
+: query-tree ( -- seq )
+    sc-server get server-query-tree ;
+
+:: group-query-tree-child. ( flag array -- )
+    <block
+    array second :> children
+    children -1 = [ "S " ] [ "G " ] if write
+    array first number>string write
+    ": " write
+    block>
+    ;
+
+: group-query-tree. ( group -- ) ! Pretty-print the node tree of GROUP.
+    group-query-tree 1 cut [ group-query-tree-child. ] with-pprint ;
 
 ! general generics
 
