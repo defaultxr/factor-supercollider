@@ -110,7 +110,7 @@ GENERIC: end ( object -- object' )
 
 GENERIC: render ( object -- object' )
 
-    ! testing
+! testing
 
-    : test-synth ( -- )
-        "/s_new" { "down" -1 0 0 } (msg-sc) ;
+: test-synth ( -- )
+    "/s_new" { "down" -1 0 0 } (msg-sc) ;
