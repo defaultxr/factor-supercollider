@@ -3,7 +3,7 @@
 USING: kernel combinators combinators.short-circuit math math.order math.parser namespaces
 words.symbol locals.types accessors classes.tuple effects effects.parser
 parser lexer
-sequences arrays byte-arrays strings splitting
+sequences arrays byte-arrays strings splitting ranges
 make prettyprint calendar
 endian pack
 init memory
@@ -55,6 +55,16 @@ SC: start-sc-server ( sc-server -- )
     sc-servers [ stop-sc-server ] each ;
 
 [ stop-all-sc-servers ] "stop supercollider" add-shutdown-hook
+
+! add actions
+
+CONSTANT: +head+ 0
+CONSTANT: +tail+ 1
+CONSTANT: +before+ 2
+CONSTANT: +after+ 3
+
+: add-action? ( object -- ? )
+    +head+ +after+ [a..b] member? ;
 
 ! node
 
