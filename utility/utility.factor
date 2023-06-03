@@ -8,6 +8,9 @@ IN: supercollider.utility
 : boolean>number ( boolean -- number )
     1 0 ? ;
 
+: number>boolean ( boolean -- number )
+    0 > ;
+
 : ensure-array ( input -- array )
     dup array? [ 1array ] unless ;
 
