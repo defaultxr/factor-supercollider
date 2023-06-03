@@ -156,7 +156,9 @@ sc-server [ <sc-server> ] initialize
     [ sc-server? ] instances [ timeout>> ] filter ; ! We check the timeout in order to filter out the tuple "prototype". There may be a better way to do this.
 
 : sc-server-running? ( sc-server -- ? )
-    process>> status>> not ;
+    process>>
+    [ status>> not ]
+    [ f ] if* ;
 
 : sc-running? ( -- ? )
     sc-server get sc-server-running? ;
