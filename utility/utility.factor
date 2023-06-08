@@ -1,7 +1,7 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
 USING: accessors arrays io io.encodings.utf8 io.files
-io.monitors kernel prettyprint sequences system threads
+io.monitors kernel math prettyprint sequences system threads
 ui.tools.listener ;
 IN: supercollider.utility
 
