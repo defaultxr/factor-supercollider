@@ -1,20 +1,9 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: kernel combinators combinators.short-circuit math math.order math.parser namespaces
-words.symbol locals.types accessors classes.tuple effects effects.parser
-parser lexer
-sequences arrays byte-arrays strings splitting ranges
-make prettyprint calendar
-endian pack
-init memory
-continuations threads concurrency.conditions concurrency.mailboxes
-io io.backend io.backend.unix io.timeouts
-io.streams.string io.encodings.binary io.encodings.utf8
-io.launcher io.pathnames io.files io.files.temp io.sockets io.monitors
-ui.tools.listener
-system xdg
-osc
-supercollider.utility supercollider.config supercollider.server supercollider.syntax ;
+USING: accessors arrays combinators.short-circuit
+concurrency.conditions continuations init io.files.temp
+io.launcher kernel namespaces ranges sequences strings
+supercollider.server supercollider.syntax threads ;
 IN: supercollider
 
 ! server commands/control
