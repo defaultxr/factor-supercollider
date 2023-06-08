@@ -13,7 +13,7 @@ TUPLE: group < node ;
     swap >>action
     swap >>id ;
 
-GENERIC: group-id ( group-or-id -- id )
+GENERIC: group-id ( group-or-id -- id ) ! Get the ID of a group object. If an integer is provided, simply return it as is.
 
 M: group group-id
     id>> ;
