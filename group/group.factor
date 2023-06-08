@@ -37,10 +37,11 @@ SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ! Make
 
 ! SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ;
 
-: group-dump-tree ( group print-control-values? -- )
-    [ group-id ]
-    [ boolean>number ] bi*
-    2array "/g_dumpTree" swap (msg-sc) ;
+: dump-group-tree ( group -- )
+    group-id 0 2array "/g_dumpTree" swap (msg-sc) ;
+
+: dump-group-tree+controls ( group -- )
+    group-id 1 2array "/g_dumpTree" swap (msg-sc) ;
 
 : group-query-tree ( group -- seq )
     group-id 0 2array "/g_queryTree" swap msg-sc nip ;
