@@ -66,18 +66,6 @@ CONSTANT: +after+ 3
 : add-action? ( object -- ? )
     +head+ +after+ [a..b] member? ;
 
-! node
-
-TUPLE: node
-    server
-    id
-    position
-    target
-    name
-    ! controls
-    ! body
-    metadata ;
-
 ! synth
 
 : launch-synth ( synth-spec -- ) ! Play a synth on the server without allocating it an ID. This should generally only be used for synths that will free themselves when finished, i.e. "one-shots". For synths that sustain, see `synth` instead, which will return a synth object that contains its ID, allowing you to control it.
