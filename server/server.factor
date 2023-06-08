@@ -42,7 +42,8 @@ TUPLE: sc-server
     socket
     osc-reader-thread
     responses
-    timeout ;
+    timeout
+    { next-node-id integer initial: 1000 } ;
 
 : <sc-server> ( -- sc-server )
     sc-server new
@@ -174,3 +175,10 @@ sc-server [ <sc-server> ] initialize
 
 ! : remote-sc-servers ( -- servers ) ! Get an array of sc-servers that were not started by Factor.
 !     1 ; ! FIX
+
+SC: sc-server-next-node-id ( sc-server -- integer ) ! Get the next available node ID on the server. See also: `sc-server-get-next-node-id`
+next-node-id>> ;
+
+SC: sc-server-get-next-node-id ( sc-server -- integer ) ! Grab the next available node ID on the server. The ID is then reserved and will not be used again.
+[ next-node-id>> ]
+[ [ 1 + ] change-next-node-id drop ] bi ;
