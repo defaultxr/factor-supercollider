@@ -12,9 +12,9 @@ Currently, there is not a lot of functionality implemented. But the following sh
 
 2. `start-sc` to start the SuperCollider server (`scsynth`) listening on port `57330`.
 
-3. `"default" { "amp" 0.5 } synth` to start the synth named `default` with its `amp` parameter set to `0.5`. Note that you must already have a synth with that name defined and written as a `scsynthdef` file in SuperCollider's synthdefs directory. At the moment, this vocab does not support defining SynthDefs.
+3. `{ "default" "amp" 0.5 } synth` to start the synth named `default` with its `amp` parameter set to `0.5`. Note that you must already have a synth with that name defined and written as a `scsynthdef` file in SuperCollider's synthdefs directory (`sc-synthdef-directory` is the variable containing the directory factor-supercollider will look for synthdef files). At the moment, this vocab does not support defining SynthDefs.
 
-4. `1 group-query-tree.` to print a list of all nodes running on the server. If all has went well, you should see the `default` synth from step 3 active.
+4. `0 f group-dump-tree` to print a list of all nodes running on the server. If all has went well, you should see the `default` synth from step 3 active.
 
 ## Future
 
