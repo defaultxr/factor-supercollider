@@ -1,7 +1,10 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: accessors effects effects.parser kernel namespaces parser
-quotations sequences splitting supercollider.server words ;
+USING: accessors arrays calendar combinators
+concurrency.mailboxes io io.backend io.files.temp io.sockets
+kernel make math math.parser memory namespaces osc sequences
+strings supercollider.config supercollider.syntax
+supercollider.utility threads ;
 IN: supercollider.syntax
 
 : make-non-server-word-name ( symbol -- symbol' )
