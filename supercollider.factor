@@ -52,9 +52,10 @@ CONSTANT: +head+ 0
 CONSTANT: +tail+ 1
 CONSTANT: +before+ 2
 CONSTANT: +after+ 3
+CONSTANT: +replace+ 4
 
 : add-action? ( object -- ? )
-    +head+ +after+ [a..b] member? ;
+    +head+ +replace+ [a..b] member? ;
 
 ! synth
 
