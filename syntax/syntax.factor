@@ -8,6 +8,8 @@ supercollider.config supercollider.syntax supercollider.utility
 threads words ;
 IN: supercollider.syntax
 
+DEFER: sc-server
+
 : make-non-server-word-name ( symbol -- symbol' )
     name>> "-server" "" replace create-word-in ;
 
