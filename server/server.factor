@@ -3,7 +3,8 @@
 USING: accessors arrays calendar combinators
 concurrency.mailboxes io io.backend io.files.temp io.sockets
 kernel make math math.parser memory namespaces osc sequences
-strings supercollider.config supercollider.utility threads ;
+strings supercollider.config supercollider.syntax
+supercollider.utility threads ;
 IN: supercollider.server
 
 ! FIX: can buffer-size and sample-rate be auto-detected?
