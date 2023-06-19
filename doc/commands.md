@@ -52,7 +52,7 @@ This document lists SuperCollider's [OSC commands](http://doc.sccode.org/Referen
 - `/g_queryTree` - `supercollider.group:group-query-tree`
 
 ## Unit Generator Commands
-- `/u_cmd`
+- `/u_cmd` - `supercollider.ugen:sc-server-ugen-command`
 
 ## Buffer Commands
 - `/b_alloc`
