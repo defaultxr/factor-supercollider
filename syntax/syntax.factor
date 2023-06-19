@@ -4,11 +4,8 @@ USING: accessors arrays calendar combinators
 concurrency.mailboxes effects effects.parser io io.backend
 io.files.temp io.sockets kernel make math math.parser memory
 namespaces osc parser quotations sequences splitting strings
-supercollider.config supercollider.syntax supercollider.utility
-threads words ;
+supercollider.config supercollider.utility threads words ;
 IN: supercollider.syntax
-
-DEFER: sc-server
 
 : make-non-server-word-name ( symbol -- symbol' )
     name>> "-server" "" replace create-word-in ;
