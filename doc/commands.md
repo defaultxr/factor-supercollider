@@ -44,10 +44,10 @@ This document lists SuperCollider's [OSC commands](http://doc.sccode.org/Referen
 ## Group Commands
 - `/g_new` - `supercollider.group:sc-server-new-group`
 - `/p_new` - `supercollider.group:sc-server-new-parallel-group`
-- `/g_head`
-- `/g_tail`
-- `/g_freeAll`
-- `/g_deepFree`
+- `/g_head` - `supercollider.group:sc-server-move-nodes-group-head`
+- `/g_tail` - `supercollider.group:sc-server-move-nodes-group-tail`
+- `/g_freeAll` `supercollider.group:sc-server-group-free-all`
+- `/g_deepFree` `supercollider.group:sc-server-group-deep-free`
 - `/g_dumpTree` - `supercollider.group:dump-group-tree`, `supercollider.group:dump-group-tree+controls`
 - `/g_queryTree` - `supercollider.group:group-query-tree`
 

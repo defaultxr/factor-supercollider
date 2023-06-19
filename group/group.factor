@@ -1,8 +1,9 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
 USING: accessors arrays grouping io kernel math math.parser
-namespaces prettyprint.sections sequences supercollider.node
-supercollider.server supercollider.syntax supercollider.utility ;
+namespaces prettyprint.sections sequences sequences.deep
+supercollider.node supercollider.server supercollider.syntax
+supercollider.utility ;
 IN: supercollider.group
 
 TUPLE: group < node ;
@@ -26,16 +27,34 @@ SC: (sc-server-new-group) ( sc-server id add-action target-id msg -- )
 ! : sc-server-new-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-group`, `<group>`.
 !     3array "/g_new" swap msg-sc-server 2drop ;
 
-SC: sc-server-new-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-group`, `<group>`.
+SC: sc-server-new-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-parallel-group`, `<group>`.
 "/g_new" (sc-server-new-group) ;
 
-SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ! Make a group on the server. See also: `sc-new-group`, `<group>`.
+SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ! Make a parallel group on the server. See also: `sc-new-group`, `<group>`.
 "/p_new" (sc-server-new-group) ;
 
-! : sc-new-group ( id add-action target-id -- )
-!     sc-server get 4 -nrot sc-server-new-group ;
+SC: (sc-server-move-nodes-group) ( sc-server groups nodes msg -- )
+[ [ ensure-array ] bi@
+  [ [ group-id ] map ] [ [ node-id ] map ] bi*
+  [ 2array ] 2map flatten
+] dip swap (msg-sc-server) ;
 
-! SC: sc-server-new-parallel-group ( sc-server id add-action target-id -- ) ;
+SC: sc-server-move-nodes-group-head ( sc-server groups nodes -- )
+"/g_head" (sc-server-move-nodes-group) ;
+
+SC: sc-server-move-nodes-group-tail ( sc-server groups nodes -- )
+"/g_tail" (sc-server-move-nodes-group) ;
+
+SC: (sc-server-group-free) ( sc-server group msg -- )
+[ ensure-array [ group-id ] map ] dip swap (msg-sc-server) ;
+
+SC: sc-server-group-free-all ( sc-server group -- )
+"/g_freeAll" (sc-server-group-free) ;
+
+SC: sc-server-group-deep-free ( sc-server group -- )
+"/g_deepFree" (sc-server-group-free) ;
+
+! FIX: these should be implemented with SC: instead of just :
 
 : dump-group-tree ( group -- )
     group-id 0 2array "/g_dumpTree" swap (msg-sc) ;
