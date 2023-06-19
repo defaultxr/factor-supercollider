@@ -1,10 +1,12 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
 USING: accessors arrays calendar combinators
-concurrency.mailboxes io io.backend io.files.temp io.sockets
-kernel make math math.parser memory namespaces osc sequences
-strings supercollider.config supercollider.syntax
-supercollider.utility threads ;
+combinators.short-circuit concurrency.conditions
+concurrency.mailboxes continuations init io io.backend
+io.files.temp io.launcher io.sockets kernel make math
+math.parser memory namespaces osc sequences strings
+supercollider.config supercollider.syntax supercollider.utility
+threads ;
 IN: supercollider.server
 
 ! FIX: can buffer-size and sample-rate be auto-detected? A: sample-rate can be, from /status.reply
