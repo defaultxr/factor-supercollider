@@ -8,45 +8,6 @@ supercollider.synthdef supercollider.ugen
 supercollider.utility threads ;
 IN: supercollider
 
-! server commands/control
-
-SC: start-sc-server ( sc-server -- )
-[ dup [ scsynth-arguments ]
-  [ stdout>> ] bi
-  <process>
-  swap >>stdout
-  swap >>command
-  "supercollider-stderr.txt" temp-file >>stderr
-  run-detached >>process drop ]
-[ connect-sc-server ] bi ;
-
-! : start-sc ( -- )
-!     sc-server get start-sc-server ;
-
-: quit-sc-server ( sc-server -- )
-    "/quit" { } msg-sc-server 2drop ;
-
-: quit-sc ( -- )
-    sc-server get quit-sc-server ;
-
-: kill-sc-server ( sc-server -- )
-    process>> kill-process ;
-
-: kill-sc ( -- )
-    sc-server get kill-sc-server ;
-
-: stop-sc-server ( sc-server -- )
-    { [ [ quit-sc-server t ] curry [ timed-out-error? ] ignore-error/f ]
-      [ kill-sc-server t ] } 1|| drop ;
-
-: stop-sc ( -- )
-    sc-server get stop-sc-server ;
-
-: stop-all-sc-servers ( -- )
-    sc-servers [ stop-sc-server ] each ;
-
-[ stop-all-sc-servers ] "stop supercollider" add-shutdown-hook
-
 ! add actions
 
 CONSTANT: +head+ 0

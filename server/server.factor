@@ -183,6 +183,36 @@ sc-server [ <sc-server> ] initialize
 ! : remote-sc-servers ( -- servers ) ! Get an array of sc-servers that were not started by Factor.
 !     1 ; ! FIX
 
+SC: start-sc-server ( sc-server -- )
+[ dup [ scsynth-arguments ]
+  [ stdout>> ] bi
+  <process>
+  swap >>stdout
+  swap >>command
+  "supercollider-stderr.txt" temp-file >>stderr
+  run-detached >>process drop ]
+[ connect-sc-server ] bi ;
+
+SC: quit-sc-server ( sc-server -- )
+"/quit" { } msg-sc-server 2drop ;
+
+SC: kill-sc-server ( sc-server -- )
+process>> kill-process ;
+
+SC: stop-sc-server ( sc-server -- )
+{ [ [ quit-sc-server t ] curry [ timed-out-error? ] ignore-error/f ]
+  [ kill-sc-server t ] } 1|| drop ;
+
+: stop-all-sc-servers ( -- )
+    sc-servers [ stop-sc-server ] each ;
+
+[ stop-all-sc-servers ] "stop supercollider" add-shutdown-hook
+
+! FIX
+SC: sc-server-status ( sc-server -- res ) ! Get various information about the status of the SuperCollider server.
+"/status" { } msg-sc-server nip
+    ;
+
 SC: sc-server-next-node-id ( sc-server -- integer ) ! Get the next available node ID on the server. See also: `sc-server-get-next-node-id`
 next-node-id>> ;
 
