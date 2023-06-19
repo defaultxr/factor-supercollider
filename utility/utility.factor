@@ -76,3 +76,6 @@ IN: supercollider.utility
 : start-file-follow-thread ( file quot thread-name -- thread )
     [ [ follow-file ] 2curry ] dip spawn ;
 
+! "Deferred" classes
+
+TUPLE: sc-server ;
