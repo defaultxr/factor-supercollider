@@ -4,22 +4,26 @@ USING: accessors arrays byte-arrays classes.tuple combinators
 effects.parser endian io io.encodings.binary io.files
 io.streams.string kernel lexer locals.types math math.order
 namespaces pack parser prettyprint sequences strings
-supercollider supercollider.config supercollider.utility
-words.symbol ;
+supercollider supercollider.config supercollider.node
+supercollider.ugen supercollider.utility words.symbol ;
 IN: supercollider.synthdef
 
-! * 
 ! https://doc.sccode.org/Reference/Synth-Definition-File-Format.html
 
 ! SYNTH: defines a ugen graph, which can also be used as a synthdef.
-! when the word defined by SYNTH: is called, it returns a ugen graph object.
-! the ugen graph object can then be started with the "play" generic
-! or its parameters can be set/changed first.
-! the play generic will return a node object, which can also have its parameters changed.
+! when the word defined by SYNTH: is called, it returns a synth (ugen graph) object.
+! the synth object can then be started with the "play" generic, or its parameters can be set/changed first.
+! alternatively, a synth object can be used inside another SYNTH definition.
+! the play generic will return a `node`, which can also have its parameters changed (while it's running).
 ! it's also possible to start a synth immediately with the "synth" word
 ! "synth" accepts the synth name and an assoc of its arguments.
 
-TUPLE: synthdef < node
+! a parsed synth definition.
+! each ugen is an array naming the ugen and specifying its inputs.
+! each ugen input is either a number (constant) or another ugen.
+TUPLE: synthdef < pseugen
+    { constants array }
+    { ugens array }
     ;
 
 GENERIC: synthdef-file-path ( def -- path )
@@ -61,9 +65,7 @@ CONSTANT: +type-id+ "SCgf"
     drop +type-id+ >byte-array ;
 
 : encoded-synthdef-version-number ( def -- byte-array )
-    drop B{ 0 0 0 2 }
-    ! { 2 } "i" pack-be ! also works
-    ;
+    drop B{ 0 0 0 2 } ; ! { 2 } "i" pack-be ! also works
 
 : encoded-synthdef-number-of-synthdefs ( def -- byte-array )
     drop B{ 0 1 } ;
@@ -81,7 +83,7 @@ CONSTANT: +type-id+ "SCgf"
     append ;
 
 : synthdef-controls ( def -- array )
-    controls>> ;
+    inputs>> ;
 
 ! : control-initial-value ( control -- initial-value )
 !     ;
@@ -89,14 +91,16 @@ CONSTANT: +type-id+ "SCgf"
 : encoded-synthdef-controls ( def -- byte-array )
     synthdef-controls
     [ length int32 ]
-    [ [ initial-value>> float32 ] map B{ } [ append ] reduce ] bi
-    append ;
+    [ [ initial-value>> float32 ] map
+      B{ } [ append ] reduce
+    ] bi append ;
 
 : encoded-synthdef-control-names ( def -- byte-array )
     synthdef-controls
     [ length int32 ]
-    [ [ swap name>> pstring swap int32 append ] map-index B{ } [ append ] reduce ] bi
-    append ;
+    [ [ swap name>> pstring swap int32 append ] map-index
+      B{ } [ append ] reduce
+    ] bi append ;
 
 : encoded-synthdef-ugen ( ugen index -- byte-array )
     swap
@@ -105,7 +109,7 @@ CONSTANT: +type-id+ "SCgf"
       [ inputs>> int32 ]
       [ outputs>> int32 ] } cleave 4array
     index int16
-    ! encoded-synthdef-ugen-input-specs
+    ! encoded-synthdef-control-specs
     ! encoded-synthdef-ugen-output-specs
     ;
 
@@ -115,8 +119,9 @@ CONSTANT: +type-id+ "SCgf"
 : encoded-synthdef-ugens ( def -- byte-array )
     synthdef-ugens
     [ length int32 ]
-    [ [ swap name>> pstring swap int32 append ] map-index B{ } [ append ] reduce ] bi
-    append ;
+    [ [ swap name>> pstring swap int32 append ] map-index
+      B{ } [ append ] reduce
+    ] bi append ;
 
 : encoded-synthdef-variants ( def -- byte-array )
     ! synthdef-variants
@@ -151,7 +156,11 @@ CONSTANT: +type-id+ "SCgf"
     [ synthdef-file-path ] bi ;
 
 : send-synthdef ( def -- )
-    assert-ugen drop ;
+    ugen check-instance drop ;
+
+: parse-synthdef-body ( def -- ) ! Parse the body of a `synthdef`, putting its constants and ugens into their slots.
+    drop ! FIX
+    ;
 
 : (SYNTH:) ( -- word inputs outputs body )
     [ scan-word-name scan-synth-effect parse-definition ]
@@ -171,11 +180,10 @@ SYNTAX: SYNTH: (SYNTH:) 4array suffix! ;
 
 : test-synthdef ( -- def )
     synthdef new
-    3 >>id
     "fafoo" >>name
     "freq" 440 control boa
     "out" 0 control boa
-    2array >>controls ;
+    2array >>inputs ;
 
 : test-write-synthdef ( -- )
     test-synthdef write-synthdef-file . ;
