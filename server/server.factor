@@ -7,7 +7,7 @@ strings supercollider.config supercollider.syntax
 supercollider.utility threads ;
 IN: supercollider.server
 
-! FIX: can buffer-size and sample-rate be auto-detected?
+! FIX: can buffer-size and sample-rate be auto-detected? A: sample-rate can be, from /status.reply
 TUPLE: sc-server-options
     { control-buses initial: 16384 }
     { audio-buses initial: 1024 }
@@ -33,6 +33,8 @@ TUPLE: sc-server-options
     sc-server-options new
     sc-plugin-directories get [ normalize-path ] map >>plugin-directories ;
 
+IN: supercollider.utility ! needed here to prevent the TUPLE below from defining a separate/conflicting "sc-server"
+
 TUPLE: sc-server
     { host initial: "127.0.0.1" }
     { port initial: 57330 }
@@ -45,6 +47,8 @@ TUPLE: sc-server
     responses
     timeout
     { next-node-id integer initial: 1000 } ;
+
+IN: supercollider.server
 
 : <sc-server> ( -- sc-server )
     sc-server new
