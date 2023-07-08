@@ -12,7 +12,8 @@ TUPLE: group < node ;
     group new
     swap >>target
     swap >>action
-    swap >>id ;
+    swap >>id
+    sc-server get >>server ;
 
 GENERIC: group-id ( group-or-id -- id ) ! Get the ID of a group object. If an integer is provided, simply return it as is.
 
