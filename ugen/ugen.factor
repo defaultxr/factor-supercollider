@@ -32,7 +32,7 @@ TUPLE: pseugen < ugen
 
 : check-input-array-length ( input -- )
     dup length 1 3 between?
-    [ unparse "incorrect number of arguments for input: " swap append throw ] unless
+    [ unparse "incorrect number of arguments for input: " prepend throw ] unless
     drop ;
 
 ! : check-input-array ( input -- input ) ! FIX
