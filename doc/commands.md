@@ -62,22 +62,22 @@ All words are defined in `supercollider.ugen` unless otherwise specified.
 
 ## Buffer Commands
 All words are defined in `supercollider.buffer` unless otherwise specified.
-- `/b_alloc`
-- `/b_allocRead`
+- `/b_alloc` - `sc-server-buffer-alloc`
+- `/b_allocRead` - `sc-server-buffer-alloc-read`
 - `/b_allocReadChannel`
-- `/b_read`
+- `/b_read` - `sc-server-buffer-read`
 - `/b_readChannel`
-- `/b_write`
-- `/b_free`
-- `/b_zero`
-- `/b_set`
-- `/b_setn`
-- `/b_fill`
-- `/b_gen`
-- `/b_close`
-- `/b_query`
-- `/b_get`
-- `/b_getn`
+- `/b_write` - `sc-server-buffer-write`
+- `/b_free` - `sc-server-buffer-free`
+- `/b_zero` - `sc-server-buffer-zero`
+- `/b_set` - `sc-server-buffer-set`
+- `/b_setn` - `sc-server-buffer-setn`
+- `/b_fill` - `sc-server-buffer-fill`
+- `/b_gen` - `sc-server-buffer-gen`
+- `/b_close` - `sc-server-buffer-close`
+- `/b_query` - `sc-server-buffer-query`
+- `/b_get` - `sc-server-buffer-get`
+- `/b_getn` - `sc-server-buffer-getn`
 
 ## Control Bus Commands
 All words are defined in `supercollider.bus` unless otherwise specified.
@@ -109,10 +109,10 @@ All words are defined in `supercollider.bus` unless otherwise specified.
 ## Buffer Fill Commands
 
 ### Wave Fill Commands
-- `sine1`
-- `sine2`
-- `sine3`
-- `cheby`
+- `sine1` - `buffer-fill-sine1`
+- `sine2` - `buffer-fill-sine2`
+- `sine3` - `buffer-fill-sine3`
+- `cheby` - `buffer-fill-cheby`
 
 ### Other Commands
-- `copy`
+- `copy` - `buffer-fill-copy`
