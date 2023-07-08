@@ -107,6 +107,12 @@ All words are defined in `supercollider.bus` unless otherwise specified.
 - `/tr`
 
 ## Buffer Fill Commands
-## Wave Fill Commands
-## Other Commands
-## Command Numbers
+
+### Wave Fill Commands
+- `sine1`
+- `sine2`
+- `sine3`
+- `cheby`
+
+### Other Commands
+- `copy`
