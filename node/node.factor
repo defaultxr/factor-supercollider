@@ -97,11 +97,20 @@ SC: sc-server-order-node ( sc-server nodes target-node position -- )
   [ node-id 1array ]
   [ 1array ] } spread prepend prepend "/n_order" swap (msg-sc-server) ;
 
-: play-node ( node -- ) ! Play a synth on the server from a `node` object. Generally you should use `play-synth`, `launch-synth`, or `play` instead of calling this directly.
-    [ { [ name>> , ]
-        [ id>> , ]
-        [ position>> , ]
-        [ target>> , ]
-        [ controls>> % ] } cleave ]
-    { } make "/s_new" swap (msg-sc) ;
+SC: sc-server-play-synth ( sc-server synth id position target params -- ) ! Start a synth on the server. See also: `play-synth`, `launch-synth`, `play`.
+[ 4array ] dip append "/s_new" (msg-sc-server) ;
 
+: play-node ( node -- ) ! Play a synth on the server from a `node` object. Generally you should use `play-synth`, `launch-synth`, or `play` instead of calling this directly.
+    { [ name>> ] [ id>> ] [ position>> ] [ target>> ] [ controls>> ] } cleave sc-play-synth ;
+
+! FIX: check that the response is /n_set
+SC: sc-server-get-synth-controls ( sc-server node controls -- values )
+ensure-array [ node-id ] dip "/s_get" swap msg-sc-server nip ;
+
+! FIX: allow getting multiple ranges
+! FIX: check that the response is /n_setn
+SC: sc-server-get-n-synth-controls ( sc-server node start-control num-controls -- values )
+[ node-id ] 2dip 3array "/s_getn" swap msg-sc-server nip ;
+
+SC: sc-server-unassign-synth-id ( sc-server nodes -- )
+ensure-array [ node-id ] map "/s_noid" swap (msg-sc-server) ;

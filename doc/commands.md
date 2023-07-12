@@ -40,10 +40,10 @@ All words are defined in `supercollider.node` unless otherwise specified.
 
 ## Synth Commands
 All words are defined in `supercollider.node` unless otherwise specified.
-- `/s_new` - `supercollider:launch-synth`, `supercollider.node:play-node`
-- `/s_get`
-- `/s_getn`
-- `/s_noid`
+- `/s_new` - `supercollider:launch-synth`, `play-node`, `sc-server-play-synth`
+- `/s_get` - `sc-server-get-synth-controls`
+- `/s_getn` - `sc-server-get-n-synth-controls`
+- `/s_noid` - `sc-server-unassign-synth-id`
 
 ## Group Commands
 All words are defined in `supercollider.group` unless otherwise specified.
