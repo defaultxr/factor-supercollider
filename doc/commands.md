@@ -88,7 +88,7 @@ All words are defined in `supercollider.bus` unless otherwise specified.
 - `/c_getn` - `sc-server-bus-get-n`
 
 ## Non Real Time Mode Commands
-- `/nrt_end`
+- `/nrt_end` - not implemented in SuperCollider.
 
 ## Replies to Commands
 - `/done`
