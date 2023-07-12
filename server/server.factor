@@ -119,7 +119,7 @@ sc-server [ <sc-server> ] initialize
 : with-sc-server ( sc-server quot -- ... )
     sc-server swap with-variable ; inline
 
-: (msg-sc-server) ( server addr params -- )
+: (msg-sc-server) ( sc-server addr params -- )
     osc-message swap [ sc-server-address ] [ socket>> ] bi send ;
 
 : (msg-sc) ( addr params -- ) ! osc-message sc-server get [ sc-server-address ] [ socket>> ] bi send
