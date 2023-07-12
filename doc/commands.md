@@ -16,10 +16,10 @@ All words are defined in `supercollider.server` unless otherwise specified.
 
 ## Synth Definition Commands
 All words are defined in `supercollider.synthdef` unless otherwise specified.
-- `/d_recv`
-- `/d_load`
-- `/d_loadDir`
-- `/d_free`
+- `/d_recv` - `sc-server-send-synthdef`
+- `/d_load` - `sc-server-load-synthdef`
+- `/d_loadDir` - `sc-server-load-synthdef-directory`
+- `/d_free` - `sc-server-free-synthdef`
 
 ## Node Commands
 All words are defined in `supercollider.node` unless otherwise specified.

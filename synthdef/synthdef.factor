@@ -18,6 +18,24 @@ IN: supercollider.synthdef
 ! it's also possible to start a synth immediately with the "synth" word
 ! "synth" accepts the synth name and an assoc of its arguments.
 
+! Commands
+
+! FIX: maybe auto-parse if a synthdef object or name is provided.
+SC: sc-server-send-synthdef ( sc-server synthdef-bytecode -- )
+byte-array check-instance
+1array "/d_recv" swap msg-sc-server 2drop ;
+
+SC: sc-server-load-synthdef ( sc-server path -- )
+1array "/d_load" swap msg-sc-server 2drop ;
+
+SC: sc-server-load-synthdef-directory ( sc-server path -- )
+1array "/d_loadDir" swap msg-sc-server 2drop ;
+
+SC: sc-server-free-synthdef ( sc-server synthdefs -- )
+ensure-array "/d_free" swap (msg-sc-server) ;
+
+! Defining synths in Factor
+
 ! a parsed synth definition.
 ! each ugen is an array naming the ugen and specifying its inputs.
 ! each ugen input is either a number (constant) or another ugen.
