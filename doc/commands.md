@@ -81,11 +81,11 @@ All words are defined in `supercollider.buffer` unless otherwise specified.
 
 ## Control Bus Commands
 All words are defined in `supercollider.bus` unless otherwise specified.
-- `/c_set`
-- `/c_setn`
-- `/c_fill`
-- `/c_get`
-- `/c_getn`
+- `/c_set` - `sc-server-bus-set`
+- `/c_setn` - `sc-server-bus-set-n`
+- `/c_fill` - `sc-server-bus-fill`
+- `/c_get` - `sc-server-bus-get`
+- `/c_getn` - `sc-server-bus-get-n`
 
 ## Non Real Time Mode Commands
 - `/nrt_end`
