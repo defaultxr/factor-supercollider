@@ -38,7 +38,10 @@ The following features are planned:
 - Envelopes.
 - Buffer management.
 - Task scheduler and tempo clock.
+- Handle command replies better.
 - Check command replies match the expected message.
+- Scrape information from command replies before passing them to the mailbox.
+- Implement OSC responders/routing.
 - SuperCollider/[cl-patterns](https://github.com/defaultxr/cl-patterns)-esque patterns system (as a separate vocabulary).
 - Documentation.
 - Tests.
