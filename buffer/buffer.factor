@@ -73,7 +73,7 @@ buffer-id 1array "/b_zero" swap msg-sc-server ;
 ! SC: sc-server-buffer-set ( sc-server buffer start-sample samples -- )
 ! "/b_set" swap (msg-sc-server) ;
 
-SC: sc-server-buffer-setn ( sc-server buffer start-sample samples -- )
+SC: sc-server-buffer-set-n ( sc-server buffer start-sample samples -- )
 [ buffer-id ] 2dip dup length 1array prepend [ 2array ] dip append "/b_setn" swap (msg-sc-server) ;
 
 ! FIX: this command supports setting multiple ranges; implement that

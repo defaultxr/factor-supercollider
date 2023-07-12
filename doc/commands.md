@@ -71,7 +71,7 @@ All words are defined in `supercollider.buffer` unless otherwise specified.
 - `/b_free` - `sc-server-buffer-free`
 - `/b_zero` - `sc-server-buffer-zero`
 - `/b_set` - `sc-server-buffer-set`
-- `/b_setn` - `sc-server-buffer-setn`
+- `/b_setn` - `sc-server-buffer-set-n`
 - `/b_fill` - `sc-server-buffer-fill`
 - `/b_gen` - `sc-server-buffer-gen`
 - `/b_close` - `sc-server-buffer-close`
