@@ -105,7 +105,7 @@ SC: sc-server-play-synth ( sc-server synth id position target params -- ) ! Star
 
 ! FIX: check that the response is /n_set
 SC: sc-server-get-synth-controls ( sc-server node controls -- values )
-ensure-array [ node-id ] dip "/s_get" swap msg-sc-server nip ;
+ensure-array [ node-id 1array ] dip append "/s_get" swap msg-sc-server nip ;
 
 ! FIX: allow getting multiple ranges
 ! FIX: check that the response is /n_setn
