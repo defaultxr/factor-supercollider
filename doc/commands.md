@@ -23,20 +23,20 @@ All words are defined in `supercollider.synthdef` unless otherwise specified.
 
 ## Node Commands
 All words are defined in `supercollider.node` unless otherwise specified.
-- `/n_free` - `free-node`
-- `/n_run`
-- `/n_set` - `control-node`
-- `/n_setn`
-- `/n_fill`
-- `/n_map`
-- `/n_mapn`
-- `/n_mapa`
-- `/n_mapan`
-- `/n_before`
-- `/n_after`
-- `/n_query`
-- `/n_trace`
-- `/n_order`
+- `/n_free` - `free-node`, `sc-server-free-node`
+- `/n_run` - `sc-server-run-node`
+- `/n_set` - `control-node`, `sc-server-control-node`
+- `/n_setn` - `sc-server-control-n-node`
+- `/n_fill` - `sc-server-fill-node`
+- `/n_map` - `sc-server-map-node`
+- `/n_mapn` - `sc-server-map-n-node`
+- `/n_mapa` - `sc-server-map-audio-node`
+- `/n_mapan` - `sc-server-map-audio-n-node`
+- `/n_before` - `sc-server-before-node`
+- `/n_after` - `sc-server-after-node`
+- `/n_query` - `sc-server-query-node`
+- `/n_trace` - `sc-server-trace-node`
+- `/n_order` - `sc-server-order-node`
 
 ## Synth Commands
 All words are defined in `supercollider.node` unless otherwise specified.
