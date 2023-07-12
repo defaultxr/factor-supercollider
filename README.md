@@ -38,6 +38,7 @@ The following features are planned:
 - Envelopes.
 - Buffer management.
 - Task scheduler and tempo clock.
+- Check command replies match the expected message.
 - SuperCollider/[cl-patterns](https://github.com/defaultxr/cl-patterns)-esque patterns system (as a separate vocabulary).
 - Documentation.
 - Tests.
