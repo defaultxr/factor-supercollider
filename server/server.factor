@@ -208,14 +208,71 @@ SC: stop-sc-server ( sc-server -- )
 
 [ stop-all-sc-servers ] "stop supercollider" add-shutdown-hook
 
-! FIX
-SC: sc-server-status ( sc-server -- res ) ! Get various information about the status of the SuperCollider server.
-"/status" { } msg-sc-server nip
-    ;
+SC: sc-server-notify ( sc-server enable? -- )
+boolean>number 1array "/notify" swap (msg-sc-server) ;
+
+SC: sc-server-notify-enable ( sc-server -- )
+1 1array "/notify" swap (msg-sc-server) ;
+
+SC: sc-server-notify-disable ( sc-server -- )
+0 1array "/notify" swap (msg-sc-server) ;
+
+SC: sc-server-notify-client ( sc-server enable? client-id -- )
+[ boolean>number ] dip 2array "/notify" swap (msg-sc-server) ;
+
+SC: sc-server-notify-enable-client ( sc-server client-id -- )
+1 swap 2array "/notify" swap (msg-sc-server) ;
+
+SC: sc-server-notify-disable-client ( sc-server client-id -- )
+0 swap 2array "/notify" swap (msg-sc-server) ;
+
+SC: sc-server-status ( sc-server -- assoc ) ! Get an assoc of various information about the status of the SuperCollider server. In particular: the number of active UGens, the number of active synths, the number of groups, the number of loaded synthdefs, the CPU usage average percent, the peak CPU usage percent, the nominal sample rate, and the actual sample rate.
+"/status" { } msg-sc-server nip rest { "ugens" "synths" "groups" "synthdefs" "cpu-average" "cpu-peak" "nominal-sample-rate" "actual-sample-rate" } swap 2array flip ;
+
+SC: sc-server-plugin-command ( sc-server command args -- )
+[ 1array ] dip append "/cmd" swap (msg-sc-server) ;
+
+CONSTANT: +dump-off+ 0
+
+CONSTANT: +dump-parsed+ 1
+
+CONSTANT: +dump-hex+ 2
+
+CONSTANT: +dump-parsed-and-hex+ 3
+
+SC: sc-server-dump-osc ( sc-server flag -- )
+dup boolean? [ boolean>number ] when 1array "/dumpOSC" swap (msg-sc-server) ;
+
+SC: sc-server-dump-osc-enable ( sc-server -- )
+"/dumpOSC" { 1 } (msg-sc-server) ;
+
+SC: sc-server-dump-osc-disable ( sc-server -- )
+"/dumpOSC" { 0 } (msg-sc-server) ;
+
+! FIX: detect that the identifier integer matches
+SC: sc-server-sync ( sc-server n -- )
+1array "/sync" swap msg-sc-server 2drop ;
+
+SC: sc-server-clear-scheduled ( sc-server -- )
+"/clearSched" { } (msg-sc-server) ;
+
+CONSTANT: +error-reporting-off+ 0
+
+CONSTANT: +error-reporting-on+ 1
+
+CONSTANT: +error-reporting-off-bundle+ -1
+
+CONSTANT: +error-reporting-on-bundle+ -2
+
+SC: sc-server-report-errors ( sc-server mode -- )
+dup boolean? [ boolean>number ] when 1array "/error" swap (msg-sc-server) ;
+
+SC: sc-server-version ( sc-server -- assoc )
+"/error" { } msg-sc-server nip { "program" "major-version" "minor-version" "patch-version" "git-branch" "git-commit" } swap 2array flip ;
 
 SC: sc-server-next-node-id ( sc-server -- integer ) ! Get the next available node ID on the server. See also: `sc-server-get-next-node-id`
 next-node-id>> ;
 
-SC: sc-server-get-next-node-id ( sc-server -- integer ) ! Grab the next available node ID on the server. The ID is then reserved and will not be used again.
+SC: sc-server-get-next-node-id ( sc-server -- integer ) ! Grab the next available node ID on the server. The ID is then reserved and will not be used again. See also: `sc-server-next-node-id`
 [ next-node-id>> ]
 [ [ 1 + ] change-next-node-id drop ] bi ;

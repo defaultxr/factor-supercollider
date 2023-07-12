@@ -5,14 +5,14 @@ This document lists SuperCollider's [OSC commands](http://doc.sccode.org/Referen
 ## Top-Level Commands
 All words are defined in `supercollider.server` unless otherwise specified.
 - `/quit` - `quit-sc-server`
-- `/notify`
+- `/notify` - `sc-server-notify`, `sc-server-notify-enable`, `sc-server-notify-disable`, `sc-server-notify-client`
 - `/status` - `sc-server-status`
-- `/cmd`
-- `/dumpOSC`
-- `/sync`
-- `/clearSched`
-- `/error`
-- `/version`
+- `/cmd` - `sc-server-plugin-command`
+- `/dumpOSC` - `sc-server-dump-osc`, `sc-server-dump-osc-enable`, `sc-server-dump-osc-disable`
+- `/sync` - `sc-server-sync`
+- `/clearSched` - `sc-server-clear-scheduled`
+- `/error` - `sc-server-report-errors`
+- `/version` - `sc-server-version`
 
 ## Synth Definition Commands
 All words are defined in `supercollider.synthdef` unless otherwise specified.
