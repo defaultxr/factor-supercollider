@@ -155,7 +155,7 @@ sc-server [ <sc-server> ] initialize
                     [ "-R" , publish-to-rendezvous?>> boolean>number number>string , ]
                     [ "-l" , max-logins>> number>string , ]
                     [ "-V" , verbosity>> number>string , ]
-                    [ "-U" , plugin-directories>> path-list-string , ]
+                    [ "-U" , plugin-directories>> path-list>string , ]
                   } cleave
       ] bi
     ] { } make ;

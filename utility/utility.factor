@@ -33,12 +33,19 @@ IN: supercollider.utility
     2 <groups> at ;
 
 ! Paths
+! FIX: add these to the io.pathnames vocab?
 
-: path-list-separator ( -- string ) ! FIX: add this to the io.pathnames vocab?
+: path-list-separator ( -- string )
     os windows? ";" ":" ? ;
 
-: path-list-string ( path-list -- string ) ! FIX: add this to the io.pathnames vocab?
+: path-list-separator? ( ch -- ? )
+    path-list-separator member? ;
+
+: path-list>string ( path-list -- string )
     path-list-separator join ;
+
+: string>path-list ( string -- seq )
+    path-list-separator split harvest ;
 
 ! Printing to the listener
 
