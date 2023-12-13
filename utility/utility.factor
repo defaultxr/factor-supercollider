@@ -1,8 +1,8 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
 USING: accessors arrays assocs grouping combinators.short-circuit
-hashtables io io.encodings.utf8 io.files io.monitors
-kernel math prettyprint sequences system threads
+hashtables io io.encodings.utf8 io.files io.monitors kernel math
+namespaces prettyprint sequences splitting system threads
 ui.tools.listener ;
 IN: supercollider.utility
 

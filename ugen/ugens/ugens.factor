@@ -1,8 +1,10 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: arrays classes.tuple combinators kernel lexer
-locals.types math math.order namespaces parser prettyprint
-sequences strings supercollider.utility words.symbol ;
+USING: arrays classes.parser classes.tuple combinators kernel
+lexer locals.types math math.order namespaces parser prettyprint
+sequences strings supercollider.node supercollider.server
+supercollider.syntax supercollider.ugen supercollider.utility
+words.symbol ;
 IN: supercollider.ugen.ugens
 
 ! ugen definition example.

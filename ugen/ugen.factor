@@ -1,9 +1,11 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: arrays classes.tuple combinators kernel lexer
-locals.types math math.order parser prettyprint sequences
+USING: accessors arrays assocs classes.tuple
+classes.tuple.parser combinators kernel lexer locals.types make
+math math.order namespaces parser prettyprint roles sequences
 strings supercollider.node supercollider.server
-supercollider.syntax supercollider.utility words.symbol ;
+supercollider.spec supercollider.syntax supercollider.utility
+words.symbol ;
 IN: supercollider.ugen
 
 SYMBOLS: ar kr ir dr pure ;

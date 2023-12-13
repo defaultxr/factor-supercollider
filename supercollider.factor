@@ -1,10 +1,10 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
 USING: accessors arrays assocs combinators.short-circuit
-concurrency.conditions continuations init io.files.temp
-io.launcher kernel math namespaces ranges sequences strings
-supercollider.node supercollider.server supercollider.syntax
-supercollider.synthdef supercollider.ugen
+concurrency.conditions continuations init io.files.temp io.launcher
+kernel math namespaces ranges sequences strings supercollider.env
+supercollider.node supercollider.server supercollider.spec
+supercollider.syntax supercollider.synthdef supercollider.ugen
 supercollider.utility threads ;
 IN: supercollider
 

@@ -1,12 +1,12 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: accessors arrays byte-arrays classes classes.tuple
-combinators effects.parser endian io io.encodings.binary
-io.files io.streams.string kernel lexer locals.types math
-math.order namespaces pack parser prettyprint sequences strings
-supercollider supercollider.config supercollider.node
-supercollider.server supercollider.syntax supercollider.ugen
-supercollider.utility words.symbol ;
+USING: accessors arrays byte-arrays classes classes.parser
+classes.tuple classes.tuple.parser combinators effects.parser
+endian io io.encodings.binary io.files io.streams.string kernel
+lexer locals.types make math math.order namespaces pack parser
+prettyprint sequences strings supercollider supercollider.config
+supercollider.node supercollider.server supercollider.syntax
+supercollider.ugen supercollider.utility words.symbol ;
 IN: supercollider.synthdef
 
 ! https://doc.sccode.org/Reference/Synth-Definition-File-Format.html
