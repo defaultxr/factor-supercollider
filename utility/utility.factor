@@ -49,8 +49,12 @@ IN: supercollider.utility
 
 ! Printing to the listener
 
+SYMBOL: listener
+
+listener [ get-listener ] initialize ! FIX: doing this seems to avoid making the listener pop up when running listener-. - so can we use that to print scsynth output now?
+
 : listener-output-stream ( -- stream )
-    get-listener [ listener-streams nip ] [ f ] if* ;
+    listener get [ listener-streams nip ] [ f ] if* ;
 
 : listener-print ( string -- )
     listener-output-stream [ print ] with-output-stream ;
