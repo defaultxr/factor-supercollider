@@ -1,46 +1,52 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: arrays classes.parser classes.tuple combinators kernel
-lexer locals.types math math.order namespaces parser prettyprint
-sequences strings supercollider.node supercollider.server
-supercollider.syntax supercollider.ugen supercollider.utility
-words.symbol ;
+USING: accessors arrays classes.parser classes.tuple combinators
+kernel lexer locals.types math math.order namespaces parser
+prettyprint roles sequences strings supercollider.node
+supercollider.server supercollider.spec supercollider.syntax
+supercollider.ugen supercollider.utility words.symbol ;
 IN: supercollider.ugen.ugens
 
-! ugen definition example.
-!
-! ugen definitions have the following components:
-! 1. the name of the ugen.
-! 2. one or more symbols representing "metadata" about the ugen:
-! - ar, kr, ir, dr - the ugen supports audio, control, initial, and/or demand rates, respectively.
-! - pure - the ugen is "pure" (side effect-free).
-! 3. a stack effect naming the inputs and outputs and metadata about each.
-! if the input or output has a colon following it, it can be followed by a spec and/or an initial value.
-!
-! for example, for ( freq: freq 440 phase: 0 -- output: bipolar ) :
-! the ugen accepts freq and phase arguments, which default to 440 and 0, respectively.
-! the freq argument also supplies "freq" as the name of its control-spec.
-! the ugen has one output, which is specified as being bipolar (i.e. normally ranges from -1 to 1).
+ROLE-TUPLE: SinOsc <{ pure-ugen ar kr mul-add single-output }
+    { freq initial: 440 }
+    { phase initial: 0 } ;
 
-! (defugen (sin-osc "SinOsc")
-!     (&optional (freq 440.0) (phase 0.0) (mul 1.0) (add 0.0))
-!   ((:ar (madd (multinew new 'pure-ugen freq phase) mul add))
-!    (:kr (madd (multinew new 'pure-ugen freq phase) mul add))))
+! SinOsc { ar kr pure-ugen } set-attributes
 
-! this works
-! UGEN: SinOsc { ar kr pure } ( freq: 440 phase: 0 mul: 1 add: 0 -- output: bipolar )
+SinOsc H{ { "freq" freq }
+          { "phase" unipolar }
+          { "output" bipolar } } set-specs
 
-! "old" style follows:
+: SinOsc.ar ( -- sinosc )
+    SinOsc new ar >>rate ;
 
-! ! UGEN: SinOsc < { pure rates: { ar kr } } ( ( freq 440 ) ( phase 0 ) ( mul 1 ) ( add 0 ) -- ( out 0 bipolar ) )
+: SinOsc.kr ( -- sinosc )
+    SinOsc new kr >>rate ;
 
-! ! can specify the rate in the ugen name:
-! UGEN: Foo.ar < pure ( ( freq 440 ) ( phase 0 ) ( mul 1 ) ( add 0 ) -- ( out 0 bipolar ) )
+: >SinOsc.ar ( freq -- sinosc )
+    SinOsc.ar swap >>freq ;
 
-! ! can specify the rate in the ugen name:
-! UGEN: Foo.ar < { pure } ( ( freq 440 ) ( phase 0 ) ( mul 1 ) ( add 0 ) -- ( out 0 bipolar ) )
-!     { pure } ;
+: >SinOsc.kr ( freq -- sinosc )
+    SinOsc.kr swap >>freq ;
 
-! UGEN: SinOsc ( freq phase mul add -- out )
-!     { freq 440 } ;
+! this is what i'd like to be able to write instead:
+! UGEN: SinOsc <{ pure-ugen ar kr mul-add single-output }
+!     { freq freq initial: 440 }
+!     { phase unipolar initial: 0 }
+!     { output bipolar out } ;
 
+ROLE-TUPLE: Out <{ ugen ar kr } ! does it have "output" in the same way SinOsc and similar ugens do?
+    { bus initial: 0 }
+    { input } ;
+
+: Out.ar ( -- out )
+    Out new ar >>rate ;
+
+: Out.kr ( -- out )
+    Out new kr >>rate ;
+
+: >Out.ar ( input -- out )
+    Out.ar swap >>input ;
+
+: >Out.kr ( input -- out )
+    Out.kr swap >>input ;

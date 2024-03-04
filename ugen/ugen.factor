@@ -1,36 +1,70 @@
 ! Copyright (C) 2023 modula t. worm.
 ! See https://factorcode.org/license.txt for BSD license.
-USING: accessors arrays assocs classes.tuple
-classes.tuple.parser combinators kernel lexer locals.types make
-math math.order namespaces parser prettyprint roles sequences
-strings supercollider.node supercollider.server
+USING: accessors arrays assocs classes.parser classes.tuple
+classes.tuple.parser combinators hashtables kernel lexer
+locals.types make math math.order namespaces parser prettyprint
+roles sequences strings supercollider.node supercollider.server
 supercollider.spec supercollider.syntax supercollider.utility
 words.symbol ;
 IN: supercollider.ugen
 
-SYMBOLS: ar kr ir dr pure ;
+ROLE: ar ;
+ROLE: kr ;
+ROLE: ir ;
+ROLE: dr ;
+
+PREDICATE: rate < symbol { ar kr ir dr } member? ;
 
 TUPLE: control
     { name string }
     { initial-value float } ;
 
-! inputs was going to be an alist mapping input names to default values?
-TUPLE: ugen
+TUPLE: ugen-definition
     { name string }
-    { rate symbol initial: ar }
-    { inputs array } ! array of control-spec objects
-    { outputs array } ;
+    { attributes sequence initial: { } }
+    { supported-rates sequence initial: { ar } }
+    { inputs sequence } ! array of control-spec objects
+    { outputs sequence }
+    { specs hashtable } ;
+
+ROLE: ugen
+    { rate rate initial: ar } ;
+
+ROLE: pure-ugen < ugen ;
+
+ROLE: mul-add
+    { mul initial: 1 }
+    { add initial: 0 } ;
+
+DEFER: >>mul
+DEFER: >>add
+
+: madd ( ugen mul add -- ugen )
+    [ >>mul ] [ >>add ] bi* ;
+
+ROLE: single-output
+    { output } ;
 
 UNION: ugen-input number ugen ;
 
-TUPLE: control-spec
-    { name string }
-    { default ugen-input }
-    spec ;
+! ROLE: mul-add { mul initial: 1 } { add initial: 0 }
 
 ! pseugen: pseudo-ugen; a ugen graph that can be embedded in another ugen graph as if it were a regular ugen.
-TUPLE: pseugen < ugen
+! i don't think this is ndeeded if synthdefs can be embedded.
+ROLE: pseugen < ugen
     { body quote } ;
+
+SYMBOL: ugens
+
+ugens [
+    H{ }
+] initialize
+
+SYMBOL: ugen-attributes
+ugen-attributes [ H{ } ] initialize
+
+: set-attributes ( ugen attributes -- )
+    swap ugen-attributes get set-at ;
 
 : check-input-array-length ( input -- )
     dup length 1 3 between?
@@ -63,32 +97,68 @@ TUPLE: pseugen < ugen
 : <control-spec> ( input -- control-spec )
     ensure-input-spec-array array>control-spec ;
 
-: parse-synth-input-tokens ( end -- tokens )
-    parse-tokens ;
+SYMBOLS: freq bipolar unipolar ;
 
-: parse-synth-output-tokens ( end -- tokens )
-    parse-tokens ;
+SYMBOL: slot-types
 
-: parse-synth-effect ( end -- inputs outputs )
-    [ "--" parse-synth-input-tokens ] dip
-    parse-synth-output-tokens ;
+slot-types [ { freq bipolar unipolar } ] initialize
 
-: scan-synth-effect ( -- inputs outputs )
-    "(" expect ")" parse-synth-effect ;
+: parse-ugen-long-slot ( -- slot-definition input-spec )
+    "}" parse-tokens [ slot-types member? not ] partition ;
 
-: scan-synth-attributes ( -- attributes )
-    scan-object ensure-array ;
+: parse-ugen-short-slot ( slot-name -- slot-definition input-spec )
+    1array { } ;
 
-: parse-ugen-definition ( -- attributes inputs outputs )
+: parse-ugen-slot ( lexer -- slot-definition input-spec )
+    lexer:parse-token dup "{" =
+                      [ drop parse-ugen-long-slot ]
+                      [ parse-ugen-short-slot ] if ;
+
+
+! : parse-slot-name-delim ( end-delim string/f -- ? )
+!     {
+!         {
+!             [ dup { ":" "(" "<" "\"" "!" } member? ]
+!             [ invalid-slot-name ]
+!         }
+!         { [ 2dup = ] [ drop f ] }
+!         [ dup "{" = [ drop parse-long-slot-name ] when , t ]
+!     } cond nip ;
+
+: parse-ugen-slots-delim ( end-delim -- )
+    dup scan-token parse-slot-name-delim
+    [ parse-ugen-slots-delim ] [ drop ] if ;
+
+: parse-ugen-slots ( -- slots specs ) ! FIX
+    ";" parse-ugen-slots-delim 1 2 ;
+
+: parse-ugen-attributes ( -- attributes )
+    "}" parse-tokens ;
+
+: parse-ugen-definition ( -- attributes slots specs )
     scan-token {
-        { "<" [ scan-synth-attributes scan-synth-effect ] }
-        [ drop { ar kr } ")" parse-synth-effect ]
-    } case ;
+        { ";" [ { } { } { } ] }
+        { "<" [ scan-word 1array parse-ugen-slots ] }
+        { "<{" [ \ } parse-until >array parse-ugen-slots ] }
+        [ drop { } parse-ugen-slots ]
+    } case
+    ! dup check-duplicate-slots 3dup check-slot-shadowing
+    ;
 
-: (UGEN:) ( -- name attributes inputs outputs )
-    scan-word-name scan-object scan-synth-effect ;
+: (UGEN:) ( -- name attributes slots specs )
+    scan-new-class parse-ugen-definition
+    ! scan-object suffix!
+    ! \ ; parse-until suffix!
+    ! parse-ugen-slots
+    ;
 
-SYNTAX: UGEN: (UGEN:) 4array suffix! ;
+: define-ugen ( name attributes slots specs -- )
+    . . . . ;
+
+SYNTAX: UGEN: ! returns: ugen-name ugen-types ugen-inputs input-specs
+        (UGEN:) define-ugen
+        ;
 
 SC: sc-server-ugen-command ( sc-server node ugen-index command args -- )
 [ node-id ] 3dip [ 3array ] dip append "/u_cmd" swap (msg-sc-server) ;
+

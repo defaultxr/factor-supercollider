@@ -4,9 +4,10 @@ USING: accessors arrays byte-arrays classes classes.parser
 classes.tuple classes.tuple.parser combinators effects.parser
 endian io io.encodings.binary io.files io.streams.string kernel
 lexer locals.types make math math.order namespaces pack parser
-prettyprint sequences strings supercollider supercollider.config
-supercollider.node supercollider.server supercollider.syntax
-supercollider.ugen supercollider.utility words.symbol ;
+prettyprint roles sequences strings supercollider
+supercollider.config supercollider.node supercollider.server
+supercollider.syntax supercollider.ugen supercollider.utility
+words.symbol ;
 IN: supercollider.synthdef
 
 ! https://doc.sccode.org/Reference/Synth-Definition-File-Format.html
@@ -40,10 +41,10 @@ ensure-array "/d_free" swap (msg-sc-server) ;
 ! a parsed synth definition.
 ! each ugen is an array naming the ugen and specifying its inputs.
 ! each ugen input is either a number (constant) or another ugen.
-TUPLE: synthdef < pseugen
+ROLE-TUPLE: synthdef < pseugen
+    { name string }
     { constants array }
-    { ugens array }
-    ;
+    { ugens array } ;
 
 GENERIC: synthdef-file-path ( def -- path )
 
@@ -132,7 +133,7 @@ CONSTANT: +type-id+ "SCgf"
     ! encoded-synthdef-ugen-output-specs
     ;
 
-: synthdef-ugens ( def -- ugens )
+: synthdef-ugens ( def -- ugens ) ! FIX
     body>> ;
 
 : encoded-synthdef-ugens ( def -- byte-array )
@@ -187,15 +188,8 @@ CONSTANT: +type-id+ "SCgf"
 
 SYNTAX: SYNTH: (SYNTH:) 4array suffix! ;
 
-! test functionality
 
-: test-ugen ( -- ugen )
-    ugen new
-    "SinOsc" >>name
-    ar >>rate
-    { } >>inputs
-    { } >>outputs
-    ;
+! test functionality
 
 : test-synthdef ( -- def )
     synthdef new
