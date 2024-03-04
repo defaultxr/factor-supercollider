@@ -14,6 +14,11 @@ IN: supercollider.utility
 : number>boolean ( boolean -- number )
     0 > ;
 
+! Sequences
+
+: case-any ( object sequence -- found ) ! Get the sequence that contains OBJECT.
+    swap [ swap member? ] curry find nip ;
+
 ! Arrays
 
 : ensure-array ( input -- array )
