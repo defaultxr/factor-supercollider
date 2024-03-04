@@ -10,7 +10,7 @@ IN: supercollider.syntax
 : make-non-server-word-name ( symbol -- symbol' )
     name>> "-server" "" replace create-word-in ;
 
-: make-non-server-def ( server-word-name -- def )
+: make-non-server-definition ( server-word-name -- def )
     1quotation [ sc-server get ] prepend ;
 
 : make-non-server-effect ( effect -- effect' )
@@ -21,7 +21,7 @@ IN: supercollider.syntax
 : make-non-server-word ( word def effect -- word def effect )
     nip
     [ [ make-non-server-word-name ]
-      [ make-non-server-def ] bi ]
+      [ make-non-server-definition ] bi ]
     [ make-non-server-effect ] bi* ;
 
 : (SC:) ( word def effect -- )
