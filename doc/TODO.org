@@ -1,0 +1,29 @@
+#+TITLE: factor-supercollider TODO
+#+DATE: <2024-02-02 Fri>
+#+DESCRIPTION: To-do list for the SuperCollider vocab for Factor.
+
+* Functionality to load and control synths, buffers, buses, groups, etc conveniently from Factor.
+** multi-channel expansion
+*** semi-relevant: https://re.factorcode.org/2024/02/divmods.html
+*** maybe it's possible to auto-generate multiple synthdefs per definition, such that multi-channel expansion is supported?
+* Words for all of SuperCollider's [[file:commands.md][OSC commands]].
+* Ensure all words have consistent names (~sc-server-buffer-free~ vs ~sc-server-free-buffer~, ~control~ vs ~param~, etc)
+* ~UGEN:~ word to define ugens.
+* Functionality to auto-generate ugen definitions by scraping from the local SuperCollider instance.
+* ~PSEUGEN:~ word to define "pseudo-ugens".
+...Or maybe ~SYNTH:~ should automatically do this itself?
+* ~SYNTH:~ word to define synthdefs in Factor.
+* Functionality to easily convert pseugens to synthdefs and vice-versa.
+* ~NODE:~ to define named nodes on the server.
+* Metadata about synthdef/ugen parameters, such as their expected input range and standard output range.
+* Envelopes.
+* Buffer management.
+* Task scheduler and tempo clock.
+* Handle command replies better.
+* Check command replies match the expected message.
+* Scrape information from command replies before passing them to the mailbox.
+* Implement OSC responders/routing.
+* SuperCollider/[cl-patterns](https://github.com/defaultxr/cl-patterns)-esque patterns system (as a separate vocabulary).
+* Documentation.
+* Tests.
+
