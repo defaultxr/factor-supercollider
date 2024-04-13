@@ -63,23 +63,16 @@ CONSTANT: +type-id+ "SCgf"
     append >byte-array ;
 
 : int8 ( int -- byte-array )
-    big-endian [ s8>byte-array ] with-endianness
-    ! 1array >byte-array
-    ;
+    big-endian [ s8>byte-array ] with-endianness ;
 
 : int16 ( int -- byte-array )
     big-endian [ s16>byte-array ] with-endianness ;
 
 : int32 ( int -- byte-array )
-    big-endian [ s32>byte-array ] with-endianness
-    ! 1array "i" pack-be
-    ;
+    big-endian [ s32>byte-array ] with-endianness ;
 
 : float32 ( float -- byte-array )
-    write-float
-    ! big-endian [ s32>byte-array ] with-endianness
-    ! 1array "f" pack-be
-    ;
+    big-endian [ write-float ] with-endianness ;
 
 : encoded-synthdef-type-id ( def -- byte-array )
     drop +type-id+ >byte-array ;
