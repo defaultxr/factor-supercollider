@@ -98,7 +98,7 @@ SC: sc-server-order-node ( sc-server nodes target-node position -- )
   [ 1array ] } spread prepend prepend "/n_order" swap (msg-sc-server) ;
 
 SC: sc-server-play-synth ( sc-server synth id position target params -- ) ! Start a synth on the server. See also: `play-synth`, `launch-synth`, `play`.
-[ 4array ] dip append "/s_new" (msg-sc-server) ;
+[ 4array ] dip append "/s_new" swap (msg-sc-server) ;
 
 : play-node ( node -- ) ! Play a synth on the server from a `node` object. Generally you should use `play-synth`, `launch-synth`, or `play` instead of calling this directly.
     { [ name>> ] [ id>> ] [ position>> ] [ target>> ] [ controls>> ] } cleave sc-play-synth ;
