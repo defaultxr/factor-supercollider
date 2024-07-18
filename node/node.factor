@@ -101,7 +101,7 @@ SC: sc-server-play-synth ( sc-server synth id position target params -- ) ! Star
 [ 4array ] dip append "/s_new" swap (msg-sc-server) ;
 
 : play-node ( node -- ) ! Play a synth on the server from a `node` object. Generally you should use `play-synth`, `launch-synth`, or `play` instead of calling this directly.
-    { [ name>> ] [ id>> ] [ position>> ] [ target>> ] [ controls>> ] } cleave sc-play-synth ;
+    { [ server>> ] [ name>> ] [ id>> ] [ position>> ] [ target>> ] [ controls>> ] } cleave sc-server-play-synth ;
 
 ! FIX: check that the response is /n_set
 SC: sc-server-get-synth-controls ( sc-server node controls -- values )
