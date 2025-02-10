@@ -13,6 +13,7 @@
 * ~PSEUGEN:~ word to define "pseudo-ugens".
 ...Or maybe ~SYNTH:~ should automatically do this itself?
 * ~SYNTH:~ word to define synthdefs in Factor.
+** can [[https://docs.factorcode.org/content/word-with-words,vocabs.parser.html][with-words]] be used to override existing words' definitions within a quote? i.e. for ~+~, ~-~, etc.
 * Functionality to easily convert pseugens to synthdefs and vice-versa.
 * ~NODE:~ to define named nodes on the server.
 * Metadata about synthdef/ugen parameters, such as their expected input range and standard output range.
@@ -23,7 +24,7 @@
 * Check command replies match the expected message.
 * Scrape information from command replies before passing them to the mailbox.
 * Implement OSC responders/routing.
-* SuperCollider/[cl-patterns](https://github.com/defaultxr/cl-patterns)-esque patterns system (as a separate vocabulary).
+* SuperCollider/[[https://github.com/defaultxr/cl-patterns][cl-patterns]]-esque patterns system (as a separate vocabulary).
 * Documentation.
 * Tests.
 
