@@ -3,7 +3,7 @@
 This document lists SuperCollider's [OSC commands](http://doc.sccode.org/Reference/Server-Command-Reference.html) (and replies) and, when implemented in factor-supercollider, the word(s) implementing them.
 
 ## Top-Level Commands
-All words are defined in `supercollider.server` unless otherwise specified.
+All words are defined in `supercollider.server`.
 - `/quit` - `quit-sc-server`
 - `/notify` - `sc-server-notify`, `sc-server-notify-enable`, `sc-server-notify-disable`, `sc-server-notify-client`
 - `/status` - `sc-server-status`
@@ -15,14 +15,14 @@ All words are defined in `supercollider.server` unless otherwise specified.
 - `/version` - `sc-server-version`
 
 ## Synth Definition Commands
-All words are defined in `supercollider.synthdef` unless otherwise specified.
+All words are defined in `supercollider.synthdef`.
 - `/d_recv` - `sc-server-send-synthdef`
 - `/d_load` - `sc-server-load-synthdef`
 - `/d_loadDir` - `sc-server-load-synthdef-directory`
 - `/d_free` - `sc-server-free-synthdef`
 
 ## Node Commands
-All words are defined in `supercollider.node` unless otherwise specified.
+All words are defined in `supercollider.node`.
 - `/n_free` - `free-node`, `sc-server-free-node`
 - `/n_run` - `sc-server-run-node`
 - `/n_set` - `control-node`, `sc-server-control-node`
@@ -39,14 +39,14 @@ All words are defined in `supercollider.node` unless otherwise specified.
 - `/n_order` - `sc-server-order-node`
 
 ## Synth Commands
-All words are defined in `supercollider.node` unless otherwise specified.
+All words are defined in `supercollider.node`.
 - `/s_new` - `supercollider:launch-synth`, `play-node`, `sc-server-play-synth`
 - `/s_get` - `sc-server-get-synth-controls`
 - `/s_getn` - `sc-server-get-n-synth-controls`
 - `/s_noid` - `sc-server-unassign-synth-id`
 
 ## Group Commands
-All words are defined in `supercollider.group` unless otherwise specified.
+All words are defined in `supercollider.group`.
 - `/g_new` - `sc-server-new-group`
 - `/p_new` - `sc-server-new-parallel-group`
 - `/g_head` - `sc-server-move-nodes-group-head`
@@ -57,11 +57,11 @@ All words are defined in `supercollider.group` unless otherwise specified.
 - `/g_queryTree` - `group-query-tree`
 
 ## Unit Generator Commands
-All words are defined in `supercollider.ugen` unless otherwise specified.
+All words are defined in `supercollider.ugen`.
 - `/u_cmd` - `sc-server-ugen-command`
 
 ## Buffer Commands
-All words are defined in `supercollider.buffer` unless otherwise specified.
+All words are defined in `supercollider.buffer`.
 - `/b_alloc` - `sc-server-buffer-alloc`
 - `/b_allocRead` - `sc-server-buffer-alloc-read`
 - `/b_allocReadChannel`
@@ -80,7 +80,7 @@ All words are defined in `supercollider.buffer` unless otherwise specified.
 - `/b_getn` - `sc-server-buffer-getn`
 
 ## Control Bus Commands
-All words are defined in `supercollider.bus` unless otherwise specified.
+All words are defined in `supercollider.bus`.
 - `/c_set` - `sc-server-bus-set`
 - `/c_setn` - `sc-server-bus-set-n`
 - `/c_fill` - `sc-server-bus-fill`
