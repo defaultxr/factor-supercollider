@@ -8,16 +8,16 @@ SYMBOLS: sc-data-directory sc-plugin-directories sc-synthdef-directory ;
 
 sc-data-directory [
     os { { linux [ xdg-data-home normalize-path "/SuperCollider" append ] }
-         { macosx [ P" ~/Library/Application Support/SuperCollider" normalize-path ] }
+         { macos [ P" ~/Library/Application Support/SuperCollider" normalize-path ] }
          { windows [ P" C:\\Program Files\\SuperCollider" normalize-path ] } ! FIX: this might not be accurate
        } case
 ] initialize
 
 sc-plugin-directories [
     os { { linux [ { "/usr/lib/SuperCollider/plugins" "/usr/share/SuperCollider/Extensions" } ] }
-         { macosx [ { } ] } ! FIX
+         { macos [ { } ] } ! FIX
          { windows [ { } ] } ! FIX
-       } case    
+       } case
 ] initialize
 
 sc-synthdef-directory [
